@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Baby Foot Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-chat">
+      <fieldset class="box-chat">
+        <legend>Tchat</legend>
+        <div class="card-header"></div>
+        <div class="index-box-form">
+          <input name="search" id="username" type="text" class="remove-style" placeholder="Nickname...">
+          <button name="submit" id="usernameBtn" type="submit"><span class="material-icons-outlined icon-btn">search</span></button>
+        </div>
+        <div class="discussion" id="chat" style="height: 600px;">
+          <ul class="list-group" id="message-list"></ul>
+          <div class="info"></div>
+        </div>
+        <div class="index-box-form">
+          <input name="message" type="text" id="message" class="remove-style" autocomplete="off" placeholder="Message...">
+          <button id="envoi_message" name="submit" class="" type="submit"><span class="material-icons-outlined icon-btn">send</span></button>
+        </div>
+      </fieldset>
+    </div>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/public/js/chat.js"></script>
+  </body>
+</html>
