@@ -58,10 +58,12 @@ legend {
   text-align: center;
 }
 
-.list-party {
-  margin-top: 10%;
-  display: flex;
-  justify-content: center;
+.legend-right {
+  float: right;
+  margin-top: -44px;
+  margin-right: -32px;
+  padding: 5px 15px;
+  font-weight: 700;
 }
 
 .box-party {
@@ -71,8 +73,15 @@ legend {
   align-items: center;
 }
 
+.list-party {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+}
+
 input:checked+label {
   color: #b8b8b8;
+  text-decoration: line-through;
 }
 
 input[type="checkbox"] {
@@ -82,10 +91,6 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked {
   box-shadow: 0 0 0 3px #fff;
-}
-
-#party {
-  width: 30%;
 }
 
 .btn-add-party {
@@ -99,10 +104,8 @@ input[type="checkbox"]:checked {
 
 .option-party {
   background: none;
-  color: inherit;
   border: none;
   cursor: pointer;
-  outline: inherit;
 }
 
 #icon-remove,
@@ -110,14 +113,21 @@ input[type="checkbox"]:checked {
   cursor: pointer;
 }
 
-/* fieldset:after {
-  content: "3";
-  position: absolute;
-  right: 10px;
-  padding: 0 5px;
-} */
-
 /* Style chat.ejs */
+.account-img {
+  float: right;
+  margin-top: -44px;
+  margin-right: -24px;
+  padding: 6px 8px;
+}
+
+.account-img button {
+  color: #3280ff;
+  background: #fff;
+  border: solid 1px #acacac;
+  cursor: pointer;
+}
+
 .div-chat {
   margin: 20px;
 }

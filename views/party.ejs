@@ -16,27 +16,31 @@
       <div class="list-party">
         <fieldset class="box-party">
           <legend>Les parties</legend>
+          <legend class="legend-right">3</legend>
+            <table>
               <% for(var i = 0; i < data.length; i++){ %>
-                <div value="<%=data[i].id%>" id="draggable">
+                <tr>
                   <form method="POST" class="icon-form">
-                    <input type="checkbox" name="checkbox" class="done" formaction="/done/<%= data[i].id %>"></span>
-                    <label for="done" class="text"><%= data[i].party%></label>
-                    <button class="option-party" formaction="/edit/<%= data[i].id %>" type="submit">
-                      <span class="material-icons-outlined" style="color: #3675fd;">edit</span>
-                    </button>
-                    <button class="option-party" formaction="/delete/<%= data[i].id %>" type="submit">
-                      <span class="material-icons-outlined" style="color: red;">close</span>
-                    </button>
+                    <td>
+                      <input type="checkbox" name="checkbox" class="done" formaction="/done/<%= data[i].id %>">
+                      <label for="done" class="text"><%= data[i].party%></label>
+                    </td>
+                    <td>
+                      <button class="option-party" formaction="/edit/<%= data[i].id %>" type="submit">
+                        <span class="material-icons-outlined" style="color: #3675fd;">edit</span>
+                      </button>
+                    </td>
+                    <td>
+                      <button class="option-party" formaction="/delete/<%= data[i].id %>" type="submit">
+                        <span class="material-icons-outlined" style="color: red;">close</span>
+                      </button>
+                    </td>
                   </form>
-                </div>
+                </tr>
               <% } %>
+          </table>
         </fieldset>
       </div>
     </div>
-    <!--
-    <script>
-      event.preventDefault()
-    </script>
-    -->
   </body>
 </html>

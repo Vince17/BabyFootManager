@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // database connection
-const Pool = require('pg').Pool
+const { Pool } = require('pg');
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -28,6 +28,8 @@ const pool = new Pool({
   password: process.env.DB_PASS,
   port: process.env.DB_PORT,
 });
+pool.connect();
+
 
 // get info from db GET
 app.get('/', async(req, res) => {
@@ -139,11 +141,17 @@ app.post('/delete/:id', async(req, res) => {
 io.on('connection', socket => {
   console.log('New user connected');
 
+  socket.on('ready for data', data_database => {
+    pool.on('notification', data_db => {
+      socket.emit('update', { message: data_db });
+    });
+  });
+
   socket.username = "Anonyme";
   socket.on('change_username', data => {
     socket.username = data.username;
     console.log(socket.username);
-  })
+  });
 
   socket.on('disconnect', () => {
     console.log('User disconnected');  
