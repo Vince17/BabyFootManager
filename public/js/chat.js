@@ -14,8 +14,14 @@
       console.log(username.value)
       socket.emit('change_username', {username: username.value})
       curUsername.setAttribute('title', username.value)
-      username.value = ''
+      username.setAttribute('value', username.value)
   })
+
+  if(username.value=''){
+    console.log('is anonyme')
+  } else {
+
+  }
 
   //message
   if(message !== null){
@@ -45,6 +51,7 @@
     setTimeout(() => {info.textContent=''}, 5000)
   })
 
+  //update data from db in realtime
   socket.on('connected', function (data_database) {
     console.log('ready for data 1');
     socket.emit('ready for data', {});

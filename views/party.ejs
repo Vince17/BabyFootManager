@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Baby Foot Manager</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
   </head>
   <body>
     <div class="container-party">
@@ -24,11 +23,6 @@
                     <td>
                       <input type="checkbox" name="checkbox" class="done" formaction="/done/<%= data[i].id %>">
                       <label for="done" class="text"><%= data[i].party%></label>
-                    </td>
-                    <td>
-                      <button class="option-party" formaction="/edit/<%= data[i].id %>" type="submit">
-                        <span class="material-icons-outlined" style="color: #3675fd;">edit</span>
-                      </button>
                     </td>
                     <td>
                       <button class="option-party" formaction="/delete/<%= data[i].id %>" type="submit">

@@ -37,13 +37,7 @@ app.get('/', async(req, res) => {
     const client = await pool.connect()
     var result =  await client.query('SELECT * FROM babyfootparty');
     if(result == ""){
-      // test
-      console.log('Aucune partie');
-    }else {
-    //  result.rows.forEach(row =>{
-    //      console.log(row);
-    //  });
-    }
+      console.log('Aucune partie');}
     res.render('index',{data: result.rows})
     client.release();
   }catch(err){
@@ -67,34 +61,6 @@ app.post('/create', async(req, res) => {
     }
   }
 });
-
-//edit a party GET
-app.get('/edit/:id', async(req, res) => {
-  const sql = 'SELECT * FROM babyfootparty WHERE id = $1';
-  console.log(sql)
-  try {
-    pool.query(sql, [id], (err, result) => {
-      console.log(result.rows[0]);
-    res.render('/', { data: result.rows[0] });});
-  }catch(err){
-    console.error(err);
-    res.send("Error 404 NOT FOUND" + err);
-}
-});
-
-////edit a party POST
-//app.post('/edit/:id', async(req, res) => {
-//  const id = req.body.id;
-//  const edit_p = [req.body.party, id];
-//  const sql = 'UPDATE babyfootparty SET party = $1 WHERE (id = $2)';
-//  try {
-//    pool.query(sql, edit_p, (err, result) => {
-//    res.redirect('/');});
-//  }catch(err){
-//    console.error(err);
-//    res.send("Error 404 NOT FOUND" + err);
-//}
-//});
 
 //checkbox party POST
 app.post('/done/:id', async(req, res) => {
@@ -141,7 +107,7 @@ app.post('/delete/:id', async(req, res) => {
 io.on('connection', socket => {
   console.log('New user connected');
 
-  socket.on('ready for data', data_database => {
+  socket.on('postgres', data => {
     pool.on('notification', data_db => {
       socket.emit('update', { message: data_db });
     });
