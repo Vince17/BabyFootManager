@@ -28,18 +28,35 @@ const pool = new Pool({
   password: process.env.DB_PASS,
   port: process.env.DB_PORT,
 });
+// socket io for postgresql db
 pool.connect();
-
+pool.query('LISTEN "changes"');
+pool.on('notification', data => {
+  io.emit("changes");
+});
 
 // get info from db GET
 app.get('/', async(req, res) => {
   try {
     const client = await pool.connect()
-    var result =  await client.query('SELECT * FROM babyfootparty');
+    var result = await client.query('SELECT * FROM babyfootparty');
     if(result == ""){
       console.log('Aucune partie');}
     res.render('index',{data: result.rows})
     client.release();
+  }catch(err){
+    console.error(err);
+    res.send("Error 404 NOT FOUND" + err);
+  }
+});
+
+// get the number of games completed
+app.get('/', async(req, res) => {
+  try {
+    const client = await pool.connect()
+    var nbDone = await client.query('SELECT COUNT(done) FROM public.babyfootparty WHERE done=true');
+    res.render('index',{data: nbDone});
+    console.log(data);
   }catch(err){
     console.error(err);
     res.send("Error 404 NOT FOUND" + err);
@@ -63,13 +80,8 @@ app.post('/create', async(req, res) => {
 });
 
 //checkbox party POST
-app.post('/done/:id', async(req, res) => {
-  const id = req.params.id;
-  checkbox = Boolean(req.body.checkbox);
-  console.log("Done");
-
-  if (checkbox == true) {
-    console.log("Done");
+app.post('/doneChk/:id', async(req, res) => {
+    const id = req.body.id;
     const sql = 'INSERT INTO babyfootparty (done) VALUES (true) WHERE id = $1';
     try {
       pool.query(sql, [id], (err, result) => {
@@ -78,16 +90,6 @@ app.post('/done/:id', async(req, res) => {
       console.error(err);
       res.send("Error 404 NOT FOUND" + err);
     }
-  } else{
-    const sql = 'INSERT INTO babyfootparty (done) VALUES (false) WHERE id = $1';
-    try {
-      pool.query(sql, [id], (err, result) => {
-      res.redirect('/');});
-    }catch(err){
-      console.error(err);
-      res.send("Error 404 NOT FOUND" + err);
-    }
-  }
 });
 
 //remove a party POST
@@ -105,14 +107,10 @@ app.post('/delete/:id', async(req, res) => {
 
 // socket
 io.on('connection', socket => {
+  //create a list for users connected //
+
   console.log('New user connected');
-
-  socket.on('postgres', data => {
-    pool.on('notification', data_db => {
-      socket.emit('update', { message: data_db });
-    });
-  });
-
+  // temporary - default username is Anonyme
   socket.username = "Anonyme";
   socket.on('change_username', data => {
     socket.username = data.username;
@@ -120,22 +118,19 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');  
+    console.log('User disconnected '+socket.username);
   });
 
   socket.on('new_message', data => {
-    console.log('New message');
+    console.log('New message from '+socket.username);
     io.sockets.emit('receive_message', {message: data.message, username: socket.username})
   });
 
   socket.on('typing', data => {
     socket.broadcast.emit('typing', {username: socket.username})
   })
-});
 
-  //  socket.on('party', data => {
-  //    socket.emit('party', data);
-  //  });
+});
 
 // default redirection
 app.use(function(req, res, next){

@@ -6,7 +6,7 @@
   let curUsername = document.querySelector('#usernameShow')
 
   let message = document.querySelector('#message')
-  let messageBtn = document.querySelector('#envoi_message')
+  let messageBtn = document.querySelector('#send-message')
   let messageList = document.querySelector('#message-list')
   
   //username
@@ -16,12 +16,6 @@
       curUsername.setAttribute('title', username.value)
       username.setAttribute('value', username.value)
   })
-
-  if(username.value=''){
-    console.log('is anonyme')
-  } else {
-
-  }
 
   //message
   if(message !== null){
@@ -47,19 +41,8 @@
     socket.emit('typing')
   })
   socket.on('typing', data => {
-    info.textContent = data.username + " is typing..."
+    info.textContent = data.username + " est en train d'écrire"
     setTimeout(() => {info.textContent=''}, 5000)
   })
-
-  //update data from db in realtime
-  socket.on('connected', function (data_database) {
-    console.log('ready for data 1');
-    socket.emit('ready for data', {});
-  });
-
-  socket.on('update', function (data_database) {
-    console.log('ready for data');
-    console.log(data.message.payload);
-  });
 
 })()
