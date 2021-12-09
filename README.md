@@ -13,7 +13,7 @@ Le système de gestion des parties comprend la liste des fonctionnalités suivan
 
 ### Architecture
  - server.js
-	 - .env
+ - .env
 	 - views
 		 - partry.ejs
 		 - chat.ejs
@@ -53,6 +53,8 @@ npm start
 
 Mot de passe et utilisateur par défaut PostgreSQL : **postgresql**
 Le serveur se lance sur le port 3000 ([http://localhost:3000](http://localhost:3000))
+
+Vous pouvez modifier toutes les variables environnements depuis le fichier **.env**
 
 ## Utilisation
 
