@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const dotenv = require('dotenv').config();
+const ent = require('ent');
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
@@ -63,7 +64,7 @@ app.get('/', async(req, res) => {
 
 //create a party POST
 app.post('/create', async(req, res) => {
-  text_party = req.body.party;
+  text_party = ent.decode(req.body.party);
   if (text_party != ''){
     try {
       const sql = 'INSERT INTO babyfootparty (party) VALUES ($1)';
@@ -119,7 +120,7 @@ io.on('connection', socket => {
   // temporary - default username is Anonyme
   socket.username = "Anonyme";
   socket.on('change_username', data => {
-    socket.username = data.username;
+    socket.username = ent.decode(data.username);
     console.log(socket.username);
   });
 
@@ -129,7 +130,7 @@ io.on('connection', socket => {
 
   socket.on('new_message', data => {
     console.log('New message from '+socket.username);
-    io.sockets.emit('receive_message', {message: data.message, username: socket.username})
+    io.sockets.emit('receive_message', {message: ent.decode(data.message), username: socket.username})
   });
 
   socket.on('typing', data => {

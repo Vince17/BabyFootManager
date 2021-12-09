@@ -31,7 +31,7 @@ Le système de gestion des parties comprend la liste des fonctionnalités suivan
  - server.js
  - .env
 	 - views
-		 - partry.ejs
+		 - party.ejs
 		 - chat.ejs
 		 - index.ejs
 	 - public
@@ -39,6 +39,7 @@ Le système de gestion des parties comprend la liste des fonctionnalités suivan
 			 - style.css
 		 - js
 			 - chat.js
+			 - party.js
 
 
 ## PostgresSQL
