@@ -58,4 +58,4 @@ Vous pouvez modifier toutes les variables environnements depuis le fichier **.en
 
 ## Utilisation
 
-![Légende d'utilisation de BabyFootManager](https://raw.githubusercontent.com/Vince17/wc-smapshot-pictures/main/utilisation_bfm.png)
+![Légende d'utilisation de BabyFootManager](https://github.com/Vince17/BabyFootManager/blob/main/utilisation_bfm.png)
