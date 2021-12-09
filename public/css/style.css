@@ -143,6 +143,8 @@ input[type="checkbox"]:checked {
 
 .discussion {
   border: solid 1px #acacac;
+  height: 400px;
+  overflow: auto;
 }
 
 fieldset .box-party {

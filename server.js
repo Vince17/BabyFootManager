@@ -10,7 +10,8 @@ const io = require('socket.io')(server);
 // set ejs files in "views" directory
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('port', process.env.APP_PORT)
+
+// app.set('port', process.env.APP_PORT)
 
 // "public" directory as an asset folder
 app.use(express.static(path.join(__dirname, '/public')));
@@ -30,10 +31,7 @@ const pool = new Pool({
 });
 // socket io for postgresql db
 pool.connect();
-pool.query('LISTEN "changes"');
-pool.on('notification', data => {
-  io.emit("changes");
-});
+pool.query('LISTEN changes')
 
 // get info from db GET
 app.get('/', async(req, res) => {
@@ -81,7 +79,7 @@ app.post('/create', async(req, res) => {
 
 //checkbox party POST
 app.post('/doneChk/:id', async(req, res) => {
-    const id = req.body.id;
+    const id = req.params.id;
     const sql = 'INSERT INTO babyfootparty (done) VALUES (true) WHERE id = $1';
     try {
       pool.query(sql, [id], (err, result) => {
@@ -108,6 +106,14 @@ app.post('/delete/:id', async(req, res) => {
 // socket
 io.on('connection', socket => {
   //create a list for users connected //
+
+  
+  pool.on('notification', message => {
+    connection.send({
+      channel: message.channel,
+      //payload: message.payload
+    });
+  });
 
   console.log('New user connected');
   // temporary - default username is Anonyme

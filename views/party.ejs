@@ -9,7 +9,7 @@
       <div class="add-party">
         <form action="/create" method="POST">
           <input placeholder="Nouvelle partie ..." type="text" name="party" id="party"><%=data.party%></input>
-          <button class="btn-add-party" type="submit">Ajouter</button>
+          <button class="btn-add-party modificationParty" type="submit">Ajouter</button>
         </form>
       </div>
       <div class="list-party">
@@ -22,12 +22,12 @@
                 <tr>
                     <td>
                       <!-- if checked/unchecked => post query -->
-                      <input type="checkbox" name="checkbox" id="checkbox">
+                      <input class="modificationParty" type="checkbox" name="checkbox" id="checkbox">
                       <label for="checkbox" type="text"><%= data[i].party%></label>
                     </td>
                     <td>
                       <form method="POST" class="icon-form">
-                      <button class="option-party" formaction="/delete/<%= data[i].id %>" type="submit">
+                      <button class="option-party modificationParty" formaction="/delete/<%= data[i].id %>" type="submit">
                         <span class="material-icons-outlined" style="color: red;">close</span>
                       </button>
                     </form>
@@ -38,15 +38,6 @@
         </fieldset>
       </div>
     </div>
-    <script type="text/javascript">
-      checkbox = document.getElementById('checkbox')
-      checkbox.addEventListener('change', (event) => {
-        if (event.currentTarget.checked) {
-          console.log('checked')
-        } else {
-          console.log('unchecked')
-        }
-      })
-    </script>
+    <script type="text/javascript" src="/public/js/party.js"></script>
   </body>
 </html>
